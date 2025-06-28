@@ -1,0 +1,13 @@
+in this directory i have two folders. tekton-pipeline-render is a npm package that can render pipelines using react with patternfly topology view.   tekton-vscode is a working vscode plugin derived from tekton-pipeline-renderer but bundling it inside the plugin (which is required for good vscode plugins).
+
+The problem is now that these two things can drift: I have to maintain two versions of tekton-pipeline-renderer. One for react web applications, and another bundled into the vscode extension. I want to solve this problem.  Here is my idea:
+
+I want to create a unified build and test structure that can:
+* test the package with react
+* take the package from tekton-pipeline-renderer, turn it into a bundle and propogate it to the tekton-vscode folder, building the plugin after applying any necessary changes / patches to make it work properly.
+* test the VS code plugin. I understand there is a vscode extension test runner for automating this.
+* assuming all the tests pass ensure that packages for vscode and npm are ready to push.
+
+I want to reiterate the workflow I want: All changes to the tekton rendering will happen in tekton-pipeline-renderer. The build process will propogate those changes to the tekton-vscode plugin and the tests will determine if both packages are working correctly. In this way I hope to reduce the maintenance burden for the actual rendering logic.
+
+create any necessary cursor rules that will help reinforce my objective and keep things on track.

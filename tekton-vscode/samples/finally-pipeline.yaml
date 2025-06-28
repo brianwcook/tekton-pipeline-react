@@ -1,0 +1,94 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: pipeline-with-finally
+  namespace: default
+spec:
+  pipelineSpec:
+    tasks:
+    - name: clone-repo
+      taskRef:
+        name: git-clone
+      params:
+      - name: url
+        value: https://github.com/example/app.git
+        
+    - name: run-tests
+      taskRef:
+        name: go-test
+      runAfter: [clone-repo]
+      
+    - name: build-app
+      taskRef:
+        name: go-build
+      runAfter: [run-tests]
+      
+    - name: build-container
+      taskRef:
+        name: buildah
+      runAfter: [build-app]
+      params:
+      - name: IMAGE
+        value: quay.io/example/myapp:latest
+        
+    - name: deploy-to-staging
+      taskRef:
+        name: kubectl-deploy
+      runAfter: [build-container]
+      params:
+      - name: environment
+        value: staging
+        
+    finally:
+    - name: cleanup-workspace
+      taskRef:
+        name: cleanup
+      params:
+      - name: path
+        value: /workspace
+        
+    - name: send-notification
+      taskRef:
+        name: slack-notify
+      params:
+      - name: message
+        value: "Pipeline completed for $(params.git-url)"
+        
+    - name: update-dashboard
+      taskRef:
+        name: update-status
+      params:
+      - name: pipeline-name
+        value: "$(context.pipelineRun.name)"
+      - name: status
+        value: "$(tasks.status)"
+        
+  status:
+    conditions:
+    - type: Succeeded
+      status: "True"
+    taskRuns:
+      pipeline-with-finally-clone-repo-xxxxx:
+        pipelineTaskName: clone-repo
+        status:
+          conditions:
+          - type: Succeeded
+            status: "True"
+      pipeline-with-finally-run-tests-xxxxx:
+        pipelineTaskName: run-tests
+        status:
+          conditions:
+          - type: Succeeded
+            status: "True"
+      pipeline-with-finally-build-app-xxxxx:
+        pipelineTaskName: build-app
+        status:
+          conditions:
+          - type: Succeeded
+            status: "True"
+      pipeline-with-finally-deploy-to-staging-xxxxx:
+        pipelineTaskName: deploy-to-staging
+        status:
+          conditions:
+          - type: Succeeded
+            status: "True"

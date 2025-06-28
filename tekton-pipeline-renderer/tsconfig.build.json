@@ -1,0 +1,27 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "ES2020",
+    "target": "ES2020"
+  },
+  "include": [
+    "src/components/**/*",
+    "src/factories/**/*",
+    "src/hooks/**/*",
+    "src/types/**/*",
+    "src/utils/**/*",
+    "src/index.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "src/webview",
+    "src/treeProvider.ts",
+    "src/extension.ts",
+    "src/webview.ts",
+    "src/**/__tests__",
+    "src/**/*.test.*",
+    "src/**/*.spec.*",
+    "src/setupTests.ts",
+    "dist"
+  ]
+} 

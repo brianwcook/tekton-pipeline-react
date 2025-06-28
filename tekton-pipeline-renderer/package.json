@@ -1,0 +1,97 @@
+{
+  "name": "tekton-pipeline-renderer",
+  "description": "React component library for rendering Tekton pipelines with PatternFly topology views",
+  "version": "1.0.0",
+  "keywords": [
+    "react",
+    "tekton",
+    "pipeline",
+    "visualization",
+    "yaml",
+    "kubernetes",
+    "patternfly",
+    "topology"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.esm.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "rollup -c rollup.config.js",
+    "build:extension": "webpack --mode production",
+    "build:watch": "rollup -c rollup.config.js --watch",
+    "dev": "webpack-dev-server --config webpack.config.js --mode development",
+    "dev:extension": "webpack --mode development --watch",
+    "sample": "webpack serve --config example/webpack.config.js --mode development",
+    "clean": "rimraf dist",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "typecheck": "tsc --noEmit",
+    "npm:publish": "npm run build && npm publish",
+    "prepublishOnly": "npm run clean && npm run build && npm run test"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "dependencies": {
+    "@patternfly/react-core": "^5.4.1",
+    "@patternfly/react-topology": "^5.4.0-prerelease.4",
+    "dagre": "^0.8.5",
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@types/dagre": "^0.7.52",
+    "@types/jest": "^29.5.3",
+    "@types/js-yaml": "^4.0.5",
+    "@types/node": "^18.x",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@typescript-eslint/eslint-plugin": "^6.4.0",
+    "@typescript-eslint/parser": "^6.4.0",
+    "css-loader": "^6.8.1",
+    "eslint": "^8.47.0",
+    "eslint-plugin-react": "^7.33.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "html-webpack-plugin": "^5.5.3",
+    "jest": "^29.6.2",
+    "jest-environment-jsdom": "^29.6.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "rimraf": "^5.0.0",
+    "rollup": "^3.26.3",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-typescript2": "^0.35.0",
+    "style-loader": "^3.3.3",
+    "ts-jest": "^29.1.1",
+    "ts-loader": "^9.4.3",
+    "typescript": "^5.1.6",
+    "webpack": "^5.88.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-org/tekton-pipeline-combo.git",
+    "directory": "tekton-pipeline-renderer"
+  },
+  "homepage": "https://github.com/your-org/tekton-pipeline-combo/tree/main/tekton-pipeline-renderer#readme",
+  "bugs": {
+    "url": "https://github.com/your-org/tekton-pipeline-combo/issues"
+  },
+  "author": "Your Name",
+  "license": "MIT"
+}

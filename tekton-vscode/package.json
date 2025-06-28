@@ -1,0 +1,126 @@
+{
+  "name": "tekton-vscode",
+  "displayName": "Tekton Pipeline Visualizer",
+  "description": "Visualize Tekton pipelines with interactive topology views",
+  "version": "1.0.0",
+  "publisher": "brianwcook",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Visualization",
+    "Other"
+  ],
+  "keywords": [
+    "tekton",
+    "pipeline",
+    "visualization",
+    "yaml",
+    "kubernetes"
+  ],
+  "activationEvents": [
+    "onLanguage:yaml",
+    "onCommand:tekton.visualizePipeline",
+    "onCommand:tekton.visualizePipelineRun"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "tekton.visualizePipeline",
+        "title": "Visualize Pipeline",
+        "category": "Tekton"
+      },
+      {
+        "command": "tekton.visualizePipelineRun",
+        "title": "Visualize Pipeline Run",
+        "category": "Tekton"
+      },
+      {
+        "command": "tekton.openSample",
+        "title": "Open Sample Pipeline",
+        "category": "Tekton"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "resourceLangId == yaml",
+          "command": "tekton.visualizePipeline",
+          "group": "tekton"
+        },
+        {
+          "when": "resourceLangId == yaml",
+          "command": "tekton.visualizePipelineRun",
+          "group": "tekton"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "tekton.visualizePipeline"
+        },
+        {
+          "command": "tekton.visualizePipelineRun"
+        },
+        {
+          "command": "tekton.openSample"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "build": "webpack --mode production",
+    "build:extension": "npm run build && vsce package",
+    "dev": "webpack --mode development --watch",
+    "build:webview": "webpack --config webpack.webview.config.js --mode production",
+    "dev:webview": "webpack --config webpack.webview.config.js --mode development --watch",
+    "clean": "rimraf dist *.vsix",
+    "test:extension": "npm run build && tsc -p tsconfig.test.json && node ./dist/test/runTest.js",
+    "test:topology": "npm run build && tsc -p tsconfig.test.json && node ./dist/test/runTest.js --grep 'Topology'",
+    "test:topology:simple": "npm run build && tsc -p tsconfig.test.json && node ./dist/test/runTest.js --grep 'Simple'",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "typecheck": "tsc --noEmit",
+    "vscode:package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^18.x",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@types/vscode": "^1.74.0",
+    "@typescript-eslint/eslint-plugin": "^6.4.0",
+    "@typescript-eslint/parser": "^6.4.0",
+    "@types/glob": "^8.1.0",
+    "@types/mocha": "^10.0.1",
+    "@vscode/test-electron": "^2.3.4",
+    "@vscode/vsce": "^2.19.0",
+    "css-loader": "^6.8.1",
+    "eslint": "^8.47.0",
+    "glob": "^10.3.3",
+    "mocha": "^10.2.0",
+    "html-webpack-plugin": "^5.5.3",
+    "rimraf": "^5.0.0",
+    "style-loader": "^3.3.3",
+    "ts-loader": "^9.4.3",
+    "typescript": "^5.1.6",
+    "webpack": "^5.88.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "@patternfly/react-core": "^5.4.1",
+    "@patternfly/react-topology": "^5.4.0-prerelease.4",
+    "js-yaml": "^4.1.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-org/tekton-pipeline-combo.git",
+    "directory": "tekton-vscode"
+  },
+  "homepage": "https://github.com/your-org/tekton-pipeline-combo/tree/main/tekton-vscode#readme",
+  "bugs": {
+    "url": "https://github.com/your-org/tekton-pipeline-combo/issues"
+  }
+}

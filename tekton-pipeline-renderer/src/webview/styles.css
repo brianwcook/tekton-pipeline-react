@@ -1,0 +1,217 @@
+/* VS Code Theme Integration */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--vscode-font-family);
+    font-size: var(--vscode-font-size);
+    background-color: var(--vscode-editor-background);
+    color: var(--vscode-editor-foreground);
+    overflow: hidden;
+}
+
+#root {
+    height: 100vh;
+    width: 100vw;
+}
+
+/* Pipeline Visualization App */
+.pipeline-visualization-app {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--vscode-panel-border);
+    background-color: var(--vscode-editor-background);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+.header-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.namespace {
+    color: var(--vscode-descriptionForeground);
+    font-size: 0.9em;
+}
+
+.refresh-btn {
+    background: var(--vscode-button-background);
+    color: var(--vscode-button-foreground);
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s;
+}
+
+.refresh-btn:hover {
+    background: var(--vscode-button-hoverBackground);
+}
+
+/* Visualization Container */
+.visualization-container {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    background: var(--vscode-editor-background);
+}
+
+/* Loading State */
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    gap: 16px;
+}
+
+.loading-spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid var(--vscode-panel-border);
+    border-top: 3px solid var(--vscode-progressBar-background);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Error State */
+.error-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+.error-container h2 {
+    color: var(--vscode-errorForeground);
+    margin-bottom: 16px;
+}
+
+.error-container p {
+    background: var(--vscode-inputValidation-errorBackground);
+    padding: 12px;
+    border-radius: 4px;
+    border-left: 4px solid var(--vscode-errorForeground);
+}
+
+.error-container details {
+    margin-top: 16px;
+}
+
+.error-container summary {
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.error-container pre {
+    background: var(--vscode-textCodeBlock-background);
+    padding: 12px;
+    border-radius: 4px;
+    overflow-x: auto;
+    font-family: var(--vscode-editor-font-family);
+    font-size: 0.9em;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* Welcome State */
+.welcome-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    gap: 16px;
+}
+
+.welcome-container h1 {
+    margin: 0;
+    font-size: 2em;
+    font-weight: 300;
+}
+
+.welcome-container p {
+    color: var(--vscode-descriptionForeground);
+    font-size: 1.1em;
+}
+
+/* PatternFly Overrides for VS Code Theme */
+.pf-c-topology-view {
+    background: var(--vscode-editor-background) !important;
+}
+
+.pf-c-topology-view__surface {
+    background: var(--vscode-editor-background) !important;
+}
+
+/* Pipeline Node Styling */
+.pf-topology-node {
+    stroke: var(--vscode-panel-border);
+}
+
+.pf-topology-node text {
+    fill: var(--vscode-editor-foreground);
+}
+
+.pf-topology-node.pf-m-success {
+    fill: var(--vscode-charts-green);
+}
+
+.pf-topology-node.pf-m-error {
+    fill: var(--vscode-charts-red);
+}
+
+.pf-topology-node.pf-m-warning {
+    fill: var(--vscode-charts-yellow);
+}
+
+.pf-topology-node.pf-m-pending {
+    fill: var(--vscode-charts-blue);
+}
+
+/* Edge Styling */
+.pf-topology-edge {
+    stroke: var(--vscode-panel-border);
+}
+
+.pf-topology-edge.pf-m-success {
+    stroke: var(--vscode-charts-green);
+}
+
+/* Toolbar Styling */
+.pf-c-topology-control-bar {
+    background: var(--vscode-sideBar-background) !important;
+    border: 1px solid var(--vscode-panel-border) !important;
+}
+
+.pf-c-button {
+    background: var(--vscode-button-background) !important;
+    color: var(--vscode-button-foreground) !important;
+    border: 1px solid var(--vscode-button-border) !important;
+}
+
+.pf-c-button:hover {
+    background: var(--vscode-button-hoverBackground) !important;
+} 

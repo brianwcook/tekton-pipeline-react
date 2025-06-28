@@ -1,0 +1,14 @@
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  name: inline-pipeline-example
+spec:
+  tasks:
+    - name: inline-task
+      taskSpec:
+        steps:
+          - name: echo-hello
+            image: ubuntu
+            script: |
+              #!/bin/bash
+              echo "Hello from the inline task!"

@@ -1,0 +1,66 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: build-and-deploy
+  namespace: default
+spec:
+  pipelineSpec:
+    tasks:
+    - name: fetch-source
+      taskRef:
+        name: git-clone
+      params:
+      - name: url
+        value: https://github.com/example/app.git
+      - name: revision
+        value: main
+    - name: run-tests
+      taskRef:
+        name: npm-test
+      runAfter:
+      - fetch-source
+    - name: build-image
+      taskRef:
+        name: buildah
+      runAfter:
+      - run-tests
+      params:
+      - name: IMAGE
+        value: quay.io/example/app:latest
+    - name: deploy-app
+      taskRef:
+        name: kubectl-apply
+      runAfter:
+      - build-image
+      params:
+      - name: manifest
+        value: k8s/deployment.yaml
+  status:
+    conditions:
+    - type: Succeeded
+      status: "True"
+    taskRuns:
+      build-and-deploy-fetch-source-xxxxx:
+        pipelineTaskName: fetch-source
+        status:
+          conditions:
+          - type: Succeeded
+            status: "True"
+      build-and-deploy-run-tests-xxxxx:
+        pipelineTaskName: run-tests
+        status:
+          conditions:
+          - type: Succeeded
+            status: "True"
+      build-and-deploy-build-image-xxxxx:
+        pipelineTaskName: build-image
+        status:
+          conditions:
+          - type: Succeeded
+            status: "True"
+      build-and-deploy-deploy-app-xxxxx:
+        pipelineTaskName: deploy-app
+        status:
+          conditions:
+          - type: Succeeded
+            status: "True" 

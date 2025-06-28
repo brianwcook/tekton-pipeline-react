@@ -1,0 +1,157 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: complex-ci-cd
+  namespace: default
+spec:
+  pipelineSpec:
+    tasks:
+    - name: checkout
+      taskRef:
+        name: git-clone
+      params:
+      - name: url
+        value: https://github.com/example/monorepo.git
+    
+    # Parallel testing phase
+    - name: test-frontend
+      taskRef:
+        name: npm-test
+      runAfter: [checkout]
+      params:
+      - name: workdir
+        value: frontend/
+    
+    - name: test-backend
+      taskRef:
+        name: go-test
+      runAfter: [checkout]
+      params:
+      - name: workdir
+        value: backend/
+    
+    - name: test-integration
+      taskRef:
+        name: pytest
+      runAfter: [checkout]
+      params:
+      - name: workdir
+        value: tests/integration/
+    
+    - name: security-scan
+      taskRef:
+        name: snyk-scan
+      runAfter: [checkout]
+    
+    - name: lint-code
+      taskRef:
+        name: eslint
+      runAfter: [checkout]
+      params:
+      - name: config
+        value: .eslintrc.js
+    
+    # Parallel build phase (depends on tests)
+    - name: build-frontend
+      taskRef:
+        name: npm-build
+      runAfter: [test-frontend, lint-code]
+      params:
+      - name: workdir
+        value: frontend/
+    
+    - name: build-backend
+      taskRef:
+        name: go-build
+      runAfter: [test-backend, security-scan]
+      params:
+      - name: workdir
+        value: backend/
+    
+    - name: build-docs
+      taskRef:
+        name: hugo-build
+      runAfter: [checkout]
+      params:
+      - name: workdir
+        value: docs/
+    
+    # Container build phase
+    - name: build-frontend-image
+      taskRef:
+        name: buildah
+      runAfter: [build-frontend]
+      params:
+      - name: IMAGE
+        value: quay.io/example/frontend:latest
+      - name: DOCKERFILE
+        value: frontend/Dockerfile
+    
+    - name: build-backend-image
+      taskRef:
+        name: buildah
+      runAfter: [build-backend]
+      params:
+      - name: IMAGE
+        value: quay.io/example/backend:latest
+      - name: DOCKERFILE
+        value: backend/Dockerfile
+    
+    # Final deployment (depends on all builds)
+    - name: deploy-staging
+      taskRef:
+        name: helm-deploy
+      runAfter: [build-frontend-image, build-backend-image, test-integration]
+      params:
+      - name: environment
+        value: staging
+      - name: values-file
+        value: k8s/staging-values.yaml
+  
+  status:
+    conditions:
+    - type: Succeeded
+      status: "True"
+    taskRuns:
+      complex-ci-cd-checkout-xxxxx:
+        pipelineTaskName: checkout
+        status:
+          conditions:
+          - type: Succeeded
+            status: "True"
+      complex-ci-cd-test-frontend-xxxxx:
+        pipelineTaskName: test-frontend
+        status:
+          conditions:
+          - type: Succeeded
+            status: "True"
+      complex-ci-cd-test-backend-xxxxx:
+        pipelineTaskName: test-backend
+        status:
+          conditions:
+          - type: Succeeded
+            status: "True"
+      complex-ci-cd-security-scan-xxxxx:
+        pipelineTaskName: security-scan
+        status:
+          conditions:
+          - type: Succeeded
+            status: "True"
+      complex-ci-cd-build-frontend-xxxxx:
+        pipelineTaskName: build-frontend
+        status:
+          conditions:
+          - type: Succeeded
+            status: "True"
+      complex-ci-cd-build-backend-xxxxx:
+        pipelineTaskName: build-backend
+        status:
+          conditions:
+          - type: Succeeded
+            status: "True"
+      complex-ci-cd-deploy-staging-xxxxx:
+        pipelineTaskName: deploy-staging
+        status:
+          conditions:
+          - type: Succeeded
+            status: "True" 

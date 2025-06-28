@@ -1,0 +1,54 @@
+{
+  "name": "tekton-pipeline-combo",
+  "version": "1.0.0",
+  "description": "Unified build system for Tekton Pipeline Renderer package and VSCode extension",
+  "private": true,
+  "workspaces": [
+    "tekton-pipeline-renderer",
+    "tekton-vscode"
+  ],
+  "scripts": {
+    "preinstall": "node -e \"if(process.env.npm_execpath.indexOf('yarn') === -1) throw new Error('Please use yarn')\"",
+    "install:all": "yarn install --frozen-lockfile",
+    "clean": "yarn workspace tekton-pipeline-renderer run clean && yarn workspace tekton-vscode run clean && rm -rf dist",
+    "build": "npm run build:renderer && npm run build:vscode",
+    "build:renderer": "yarn workspace tekton-pipeline-renderer run build",
+    "build:vscode": "yarn workspace tekton-vscode run build",
+    "build:extension": "yarn workspace tekton-vscode run build:extension",
+    "test": "npm run test:renderer && npm run test:vscode",
+    "test:renderer": "yarn workspace tekton-pipeline-renderer run test",
+    "test:vscode": "yarn workspace tekton-vscode run test:extension",
+    "test:topology": "yarn workspace tekton-vscode run test:topology",
+    "test:topology:simple": "yarn workspace tekton-vscode run test:topology:simple",
+    "test:watch": "yarn workspace tekton-pipeline-renderer run test:watch",
+    "dev": "npm run dev:renderer",
+    "dev:renderer": "yarn workspace tekton-pipeline-renderer run dev",
+    "dev:vscode": "yarn workspace tekton-vscode run dev",
+    "sample": "yarn workspace tekton-pipeline-renderer run sample",
+    "lint": "yarn workspace tekton-pipeline-renderer run lint && yarn workspace tekton-vscode run lint",
+    "lint:fix": "yarn workspace tekton-pipeline-renderer run lint:fix && yarn workspace tekton-vscode run lint:fix",
+    "propagate": "node scripts/propagate-changes.js",
+    "ci": "npm run clean && npm run install:all && npm run lint && npm run test && npm run build",
+    "release:check": "npm run ci && npm run propagate && npm run test",
+    "release:prepare": "npm run release:check && npm run build:extension",
+    "vscode:package": "yarn workspace tekton-vscode run vscode:package",
+    "npm:publish": "yarn workspace tekton-pipeline-renderer run npm:publish"
+  },
+  "devDependencies": {
+    "@types/node": "^18.x",
+    "typescript": "^5.1.6",
+    "cross-env": "^7.0.3",
+    "concurrently": "^8.2.0",
+    "rimraf": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "yarn": ">=1.22.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-org/tekton-pipeline-combo.git"
+  },
+  "author": "Your Name",
+  "license": "MIT"
+} 

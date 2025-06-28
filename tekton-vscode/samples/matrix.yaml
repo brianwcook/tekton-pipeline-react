@@ -1,0 +1,27 @@
+apiVersion: tekton.dev/v1
+kind: PipelineRun
+metadata:
+  name: build-and-deploy
+  namespace: default
+spec:
+  pipelineSpec:
+    tasks:
+    - name: inline-task
+      matrix:
+        params:
+          - name: message
+            value:
+              - "hello"
+              - "goodbye"
+      taskSpec:
+        params:
+        - name: message
+          description: A message to be printed.
+          type: string
+        steps:
+          - name: echo-hello
+            image: ubuntu
+            script: |
+              #!/usr/bin/env bash
+              echo "$(params.message)"
+   

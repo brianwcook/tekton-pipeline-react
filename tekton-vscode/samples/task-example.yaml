@@ -1,0 +1,54 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: build-docker-image
+  namespace: default
+spec:
+  description: Build a Docker image using buildah
+  params:
+  - name: IMAGE
+    description: Name (reference) of the image to build
+    type: string
+  - name: DOCKERFILE
+    description: Path to the Dockerfile to build
+    default: ./Dockerfile
+    type: string
+  - name: CONTEXT
+    description: The build context used by buildah
+    default: .
+    type: string
+  workspaces:
+  - name: source
+    description: The workspace containing the source code
+  steps:
+  - name: build-image
+    image: quay.io/buildah/stable:v1.23.1
+    workingDir: $(workspaces.source.path)
+    script: |
+      buildah bud \
+        --format=oci \
+        --tls-verify=true \
+        --no-cache \
+        -f $(params.DOCKERFILE) \
+        -t $(params.IMAGE) \
+        $(params.CONTEXT)
+    volumeMounts:
+    - name: varlibcontainers
+      mountPath: /var/lib/containers
+    securityContext:
+      privileged: true
+  - name: push-image
+    image: quay.io/buildah/stable:v1.23.1
+    script: |
+      buildah push \
+        --tls-verify=true \
+        $(params.IMAGE) \
+        docker://$(params.IMAGE)
+    volumeMounts:
+    - name: varlibcontainers
+      mountPath: /var/lib/containers
+    securityContext:
+      privileged: true
+  volumes:
+  - name: varlibcontainers
+    emptyDir: {}
