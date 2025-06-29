@@ -119,6 +119,14 @@ function bundleRendererCode() {
   const rendererSrcDir = path.join(RENDERER_DIR, 'src');
   const vscodeLibDir = path.join(VSCODE_DIR, 'src', 'lib', 'tekton-renderer');
   
+  console.log(`🔍 Source directory: ${rendererSrcDir}`);
+  console.log(`🔍 Target directory: ${vscodeLibDir}`);
+  
+  // Verify source directory exists
+  if (!fs.existsSync(rendererSrcDir)) {
+    throw new Error(`❌ Renderer source directory not found: ${rendererSrcDir}`);
+  }
+  
   // Remove existing bundled code using Node.js
   if (fs.existsSync(vscodeLibDir)) {
     console.log('🧹 Removing existing bundled code...');
@@ -126,6 +134,13 @@ function bundleRendererCode() {
   }
   
   // Create lib directory
+  const libParentDir = path.join(VSCODE_DIR, 'src', 'lib');
+  if (!fs.existsSync(libParentDir)) {
+    console.log(`📁 Creating lib directory: ${libParentDir}`);
+    fs.mkdirSync(libParentDir, { recursive: true });
+  }
+  
+  console.log(`📁 Creating target directory: ${vscodeLibDir}`);
   fs.mkdirSync(vscodeLibDir, { recursive: true });
   
   // Copy renderer source code (excluding extension-specific files)
@@ -181,6 +196,25 @@ export * from './utils';
   } else {
     throw new Error('❌ index.ts was not created properly');
   }
+  
+  // Final verification that the directory structure matches what webpack expects
+  console.log('🔍 Final verification of bundled structure:');
+  try {
+    const vscodeWebviewDir = path.join(VSCODE_DIR, 'src', 'webview');
+    const relativePathToLib = path.relative(vscodeWebviewDir, vscodeLibDir);
+    console.log(`   From webview dir: ${vscodeWebviewDir}`);
+    console.log(`   To lib dir: ${vscodeLibDir}`);
+    console.log(`   Relative path: ${relativePathToLib}`);
+    console.log(`   Expected import: '../lib/tekton-renderer'`);
+    
+    if (relativePathToLib !== '../lib/tekton-renderer') {
+      console.warn(`⚠️  Path mismatch! Expected '../lib/tekton-renderer', got '${relativePathToLib}'`);
+    } else {
+      console.log('✅ Import path verification passed');
+    }
+  } catch (pathError) {
+    console.warn('⚠️  Could not verify import paths:', pathError.message);
+  }
 }
 
 /**
@@ -233,8 +267,16 @@ function runChecks() {
  */
 function main() {
   try {
-    // Always use bundled approach - copy files for self-contained extension
     console.log('🚀 Using COPY propagation mode (self-contained extension)');
+    
+    // Debug environment info for CI troubleshooting
+    console.log('🔍 Environment debug info:');
+    console.log(`   Working directory: ${process.cwd()}`);
+    console.log(`   Renderer dir: ${RENDERER_DIR}`);
+    console.log(`   VSCode dir: ${VSCODE_DIR}`);
+    console.log(`   Renderer src exists: ${fs.existsSync(path.join(RENDERER_DIR, 'src'))}`);
+    console.log(`   VSCode src exists: ${fs.existsSync(path.join(VSCODE_DIR, 'src'))}`);
+    
     bundleRendererCode();
     updateToBundledImports();
     syncSampleFiles();
@@ -245,6 +287,7 @@ function main() {
     
   } catch (error) {
     console.error('❌ Failed to propagate changes:', error.message);
+    console.error('Stack trace:', error.stack);
     process.exit(1);
   }
 }
