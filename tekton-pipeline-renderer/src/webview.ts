@@ -1,5 +1,4 @@
 import * as vscode from 'vscode';
-import * as path from 'path';
 
 export class PipelineWebviewProvider {
     private panels: Map<string, vscode.WebviewPanel> = new Map();

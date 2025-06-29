@@ -5,8 +5,6 @@ import { PipelineRunData } from '@konflux/tekton-pipeline-renderer/types';
 import { 
     Card,
     CardBody,
-    Split,
-    SplitItem,
     Alert,
     AlertGroup,
     Spinner,

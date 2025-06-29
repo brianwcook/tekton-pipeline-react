@@ -5,7 +5,8 @@
   "version": "1.0.0",
   "publisher": "brianwcook",
   "engines": {
-    "vscode": "^1.74.0"
+    "vscode": "^1.74.0",
+    "node": ">=20.0.0"
   },
   "categories": [
     "Visualization",
@@ -85,7 +86,7 @@
     "vscode:package": "vsce package"
   },
   "devDependencies": {
-    "@types/node": "^18.x",
+    "@types/node": "^20.x",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@types/vscode": "^1.74.0",
