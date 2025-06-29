@@ -203,7 +203,7 @@ describe('VisualizationFactory', () => {
 
   describe('Control Bar Integration', () => {
     it('should render control bar when provided', () => {
-      const mockControlBar = (controller: Controller) => (
+      const mockControlBar = (_controller: Controller) => (
         <div data-testid="custom-control-bar">Control Bar</div>
       );
 
@@ -367,8 +367,9 @@ describe('VisualizationFactory', () => {
         })
       };
 
-      jest.mocked(require('@patternfly/react-topology').Visualization)
-        .mockImplementationOnce(() => errorVisualization);
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const { Visualization } = require('@patternfly/react-topology');
+      jest.mocked(Visualization).mockImplementationOnce(() => errorVisualization);
 
       // Capture console.error calls during this test
       const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});

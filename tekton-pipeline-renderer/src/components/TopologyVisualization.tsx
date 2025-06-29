@@ -165,7 +165,7 @@ export const TopologyVisualization: React.FC<TopologyVisualizationProps> = ({
   width = '100%',
   height = '600px',
   className,
-  onError,
+  onError: _onError,
 }) => {
   const model = React.useMemo(() => {
     if (!pipelineRun) return null;

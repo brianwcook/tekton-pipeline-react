@@ -4,6 +4,7 @@
   "description": "Visualize Tekton pipelines with interactive topology views",
   "version": "1.0.0",
   "publisher": "brianwcook",
+  "license": "MIT",
   "engines": {
     "vscode": "^1.74.0",
     "node": ">=20.0.0"

@@ -101,7 +101,6 @@ export class TektonTreeProvider implements vscode.TreeDataProvider<TektonItem> {
     }
 
     private async findYamlFiles(uri: vscode.Uri): Promise<vscode.Uri[]> {
-        const files: vscode.Uri[] = [];
         const yamlPattern = new vscode.RelativePattern(uri, '**/*.{yaml,yml}');
         const yamlFiles = await vscode.workspace.findFiles(yamlPattern, '**/node_modules/**');
         

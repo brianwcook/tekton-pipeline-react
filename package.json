@@ -29,6 +29,8 @@
     "lint:fix": "yarn workspace tekton-pipeline-renderer run lint:fix && yarn workspace tekton-vscode run lint:fix",
     "propagate": "node scripts/propagate-changes.js",
     "ci": "npm run clean && npm run install:all && npm run lint && npm run test && npm run build",
+    "ci:github": "npm run lint && npm run build:renderer && npm run build:extension && npm run vscode:package",
+    "pre-push": "npm run ci:github",
     "release:check": "npm run ci && npm run propagate && npm run test",
     "release:prepare": "npm run release:check && npm run build:extension",
     "vscode:package": "yarn workspace tekton-vscode run vscode:package",
