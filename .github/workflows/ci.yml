@@ -36,38 +36,38 @@ jobs:
         if: matrix.node-version == '18.x'
         run: |
           cd tekton-pipeline-renderer
-          npm run lint
+          yarn run lint
       
       - name: Lint all packages (Node.js 20.x)
         if: matrix.node-version == '20.x'
-        run: npm run lint
+        run: yarn run lint
       
       - name: Run renderer tests
-        run: npm run test:renderer
+        run: yarn run test:renderer
       
       - name: Build renderer package
-        run: npm run build:renderer
+        run: yarn run build:renderer
       
       - name: Propagate changes to VSCode extension (Node.js 20+ only)
         if: matrix.node-version == '20.x'
-        run: npm run propagate
+        run: yarn run propagate
       
       - name: Run VSCode extension tests (Node.js 20+ only)
         if: matrix.node-version == '20.x'
-        run: xvfb-run -a npm run test:vscode
+        run: xvfb-run -a yarn run test:vscode
       
       - name: Build VSCode extension (Node.js 20+ only)
         if: matrix.node-version == '20.x'
-        run: npm run build:extension
+        run: yarn run build:extension
       
       - name: Package VSCode extension (Node.js 20+ only)
         if: matrix.node-version == '20.x'
-        run: npm run vscode:package
+        run: yarn run vscode:package
 
   release-check:
     runs-on: ubuntu-latest
     needs: test
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' || github.event_name == 'pull_request'
     
     steps:
       - name: Checkout code
@@ -83,7 +83,7 @@ jobs:
         run: yarn install --frozen-lockfile
       
       - name: Run comprehensive tests
-        run: xvfb-run -a npm run ci
+        run: xvfb-run -a yarn run ci
         
       - name: Validate packages are ready for release
         run: |
