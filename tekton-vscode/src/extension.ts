@@ -97,7 +97,7 @@ function getWebviewContent(webview: vscode.Webview, extensionUri: vscode.Uri, ya
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource} 'unsafe-inline' https://unpkg.com; script-src 'nonce-${nonce}' ${webview.cspSource}; connect-src https:; img-src ${webview.cspSource} data:;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource} 'unsafe-inline' https://unpkg.com; script-src 'nonce-${nonce}' ${webview.cspSource} https://unpkg.com; connect-src https:; img-src ${webview.cspSource} data:; font-src https://unpkg.com data:;">
     
     <!-- PatternFly CSS -->
     <link rel="stylesheet" href="https://unpkg.com/@patternfly/patternfly@5.4.1/patternfly.css">
@@ -105,10 +105,11 @@ function getWebviewContent(webview: vscode.Webview, extensionUri: vscode.Uri, ya
     
     <title>Tekton Pipeline Visualization</title>
     <style>
+        /* Base VSCode theme integration */
         body {
             margin: 0;
             padding: 0;
-            background: var(--vscode-editor-background);
+            background: var(--vscode-editor-background) !important;
             color: var(--vscode-editor-foreground);
             font-family: var(--vscode-font-family);
             height: 100vh;
@@ -118,6 +119,7 @@ function getWebviewContent(webview: vscode.Webview, extensionUri: vscode.Uri, ya
         #root {
             height: 100vh;
             width: 100vw;
+            background: var(--vscode-editor-background) !important;
         }
         
         .loading-container {
@@ -134,6 +136,63 @@ function getWebviewContent(webview: vscode.Webview, extensionUri: vscode.Uri, ya
             border: 1px solid var(--vscode-inputValidation-errorBorder);
             margin: 20px;
             border-radius: 4px;
+        }
+
+        /* CRITICAL: Override PatternFly topology backgrounds */
+        /* Target the exact DOM structure from user's inspection */
+        .pf-topology-content,
+        .pf-topology-visualization-surface,
+        .pf-topology-visualization-surface__svg,
+        div[data-test-id="topology"],
+        div[data-surface="true"] {
+            background: var(--vscode-editor-background) !important;
+            background-color: var(--vscode-editor-background) !important;
+        }
+
+        /* Comprehensive PatternFly overrides */
+        .pf-c-topology-view,
+        div.pf-c-topology-view,
+        .pf-c-topology-view__surface,
+        div.pf-c-topology-view__surface {
+            background: var(--vscode-editor-background) !important;
+            background-color: var(--vscode-editor-background) !important;
+        }
+
+        /* SVG element overrides */
+        .pf-c-topology-view svg,
+        .pf-topology-visualization-surface__svg,
+        svg.pf-topology-visualization-surface__svg {
+            background: var(--vscode-editor-background) !important;
+            background-color: var(--vscode-editor-background) !important;
+        }
+
+        /* Force override any light backgrounds with maximum specificity */
+        *[style*="background: #f5f5f5"],
+        *[style*="background-color: #f5f5f5"],
+        *[style*="background: rgb(245, 245, 245)"],
+        *[style*="background-color: rgb(245, 245, 245)"],
+        *[style*="background: #f0f0f0"],
+        *[style*="background-color: #f0f0f0"] {
+            background: var(--vscode-editor-background) !important;
+            background-color: var(--vscode-editor-background) !important;
+        }
+
+        /* Nuclear option: override all light backgrounds */
+        div, svg, canvas {
+            background-color: transparent !important;
+        }
+        
+        /* Make sure root containers have dark background */
+        body *, #root * {
+            background-color: transparent !important;
+        }
+        
+        /* Specific overrides for PatternFly topology components */
+        .pf-c-topology-view *,
+        div.pf-c-topology-view *,
+        .pf-topology-content *,
+        .pf-topology-visualization-surface * {
+            background-color: transparent !important;
         }
     </style>
 </head>

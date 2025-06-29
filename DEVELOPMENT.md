@@ -33,7 +33,7 @@ npm run sample  # Interactive testing
 # 4. Propagate to VSCode extension
 cd ..
 npm run propagate        # Development mode (fast)
-npm run propagate:bundle # Bundle mode (for release)
+npm run propagate # Bundle mode (for release)
 
 # 5. Test the extension integration
 npm run test:vscode
@@ -138,64 +138,44 @@ yarn upgrade
 # Update specific package
 yarn upgrade some-package@^2.0.0
 
-# Always propagate after updating renderer dependencies
-npm run propagate          # Development
-npm run propagate:bundle   # Release
+  # Always propagate after updating renderer dependencies
+  npm run propagate   # Bundles renderer code into extension
 ```
 
 ## 🔄 Propagation Process
 
-The propagation script (`scripts/propagate-changes.js`) supports **two modes**:
+The propagation script (`scripts/propagate-changes.js`) **bundles the renderer into the VSCode extension**:
 
-### 🔧 Development Mode: `npm run propagate`
-
-**What it does:**
-1. **Version Synchronization**: Ensures both packages have the same version
-2. **Dependency Updates**: Updates VSCode extension to use `file:../tekton-pipeline-renderer`
-3. **Sample Files**: Copies sample pipeline files for consistency
-4. **Validation**: Runs post-propagation checks
-
-**Good for:** Active development, fast iteration, debugging
-
-### 📦 Bundle Mode: `npm run propagate:bundle`
+### 📦 Bundle Mode: `npm run propagate`
 
 **What it does:**
 1. **Code Copying**: Physically copies renderer source to `tekton-vscode/src/lib/`
 2. **Dependency Removal**: Removes external renderer dependency
 3. **Index Generation**: Creates bundled exports file
 4. **Sample Files**: Copies sample pipeline files
-5. **Validation**: Ensures bundled extension builds correctly
+5. **Version Synchronization**: Ensures both packages have the same version
+6. **Validation**: Ensures bundled extension builds correctly
 
-**Good for:** Releases, CI/CD, creating self-contained extensions
+**Good for:** Development, releases, CI/CD, creating self-contained extensions
+
+**Result:** The VSCode extension becomes completely self-contained with all renderer code bundled inside.
 
 ### Manual Propagation Examples
 
 ```bash
-# Development workflow
+# Run propagation (always bundles code)
 npm run propagate
-# Creates: file dependency link
-
-# Release workflow  
-npm run propagate:bundle
 # Creates: tekton-vscode/src/lib/tekton-renderer/ with all source code
 ```
 
-### What Bundle Mode Creates
+### What Propagation Creates
 
 ```
-Before bundling:
+After propagation:
 tekton-vscode/package.json
 {
   "dependencies": {
-    "tekton-pipeline-renderer": "file:../tekton-pipeline-renderer"
-  }
-}
-
-After bundling:
-tekton-vscode/package.json
-{
-  "dependencies": {
-    // renderer dependency removed
+    // renderer dependency removed (code is bundled inside)
   }
 }
 
@@ -261,12 +241,30 @@ npm run sample
 
 ### Pre-Release Checklist
 
+#### 🚀 TL;DR - Automated Pre-Release
+
+```bash
+# Run the automated pre-release script (recommended)
+npm run pre-release
+```
+
+**What it does:**
+- ✅ Optionally bumps versions (with prompts)
+- ✅ Runs complete CI pipeline
+- ✅ Bundles renderer code into VSCode extension  
+- ✅ Runs comprehensive release checks
+- ✅ Guides you through manual testing steps
+- ✅ Builds packages for release
+- ✅ Creates .vsix file for VSCode extension
+
+#### 📋 Manual Steps (if you prefer to run individually)
+
 ```bash
 # 1. Run complete CI pipeline
 npm run ci
 
 # 2. Bundle renderer code into extension
-npm run propagate:bundle
+npm run propagate
 
 # 3. Run comprehensive release check
 npm run release:check

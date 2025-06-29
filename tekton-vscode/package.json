@@ -72,7 +72,7 @@
   },
   "scripts": {
     "vscode:prepublish": "npm run build",
-    "build": "webpack --mode production",
+    "build": "webpack --mode production && webpack --config webpack.webview.config.js --mode production",
     "build:extension": "npm run build && vsce package",
     "dev": "webpack --mode development --watch",
     "build:webview": "webpack --config webpack.webview.config.js --mode production",

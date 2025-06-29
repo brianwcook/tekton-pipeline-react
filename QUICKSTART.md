@@ -92,7 +92,7 @@ npm run propagate
 npm run test:vscode
 
 # 5. For release, use bundle mode
-npm run propagate:bundle
+npm run propagate
 ```
 
 ## 🧪 Test Everything
@@ -128,8 +128,8 @@ npm run sample
 # 2. Make changes in tekton-pipeline-renderer/
 # 3. See changes live in browser
 # 4. When ready, propagate
-npm run propagate          # Development mode
-npm run propagate:bundle   # Release mode (true bundling)
+npm run propagate          # Development mode  
+npm run propagate   # Release mode (true bundling)
 
 # 5. Test everything
 npm run test
@@ -160,7 +160,7 @@ git commit -m "feat: your awesome feature"
 |---------|-------------|
 | `npm run sample` | Test changes immediately |
 | `npm run propagate` | After renderer changes (development) |
-| `npm run propagate:bundle` | For release builds (true bundling) |
+| `npm run propagate` | For release builds (true bundling) |
 | `npm run ci` | Before committing |
 | `npm run test` | All the time! |
 | `npm run vscode:package` | Create VSCode extension |

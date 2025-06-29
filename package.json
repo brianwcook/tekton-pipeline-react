@@ -8,7 +8,7 @@
     "tekton-vscode"
   ],
   "scripts": {
-    "preinstall": "node -e \"if(process.env.npm_execpath.indexOf('yarn') === -1) throw new Error('Please use yarn')\"",
+    "preinstall": "node -e \"if(process.env.npm_execpath && process.env.npm_execpath.indexOf('yarn') === -1) throw new Error('Please use yarn')\"",
     "install:all": "yarn install --frozen-lockfile",
     "clean": "yarn workspace tekton-pipeline-renderer run clean && yarn workspace tekton-vscode run clean && rm -rf dist",
     "build": "yarn run build:renderer && yarn run build:vscode",
@@ -28,11 +28,12 @@
     "lint": "yarn workspace tekton-pipeline-renderer run lint && yarn workspace tekton-vscode run lint",
     "lint:fix": "yarn workspace tekton-pipeline-renderer run lint:fix && yarn workspace tekton-vscode run lint:fix",
     "propagate": "node scripts/propagate-changes.js",
-    "ci": "yarn run clean && yarn run install:all && yarn run lint && yarn run test && yarn run build",
+    "ci": "yarn run clean && yarn run lint && yarn run test && yarn run build",
     "ci:github": "yarn run lint && yarn run build:renderer && yarn run build:extension && yarn run vscode:package",
     "pre-push": "yarn run ci:github",
-    "release:check": "yarn run ci && yarn run propagate && yarn run test",
+    "release:check": "yarn run ci && yarn run propagate",
     "release:prepare": "yarn run release:check && yarn run build:extension",
+    "pre-release": "node scripts/pre-release.js",
     "vscode:package": "yarn workspace tekton-vscode run vscode:package",
     "npm:publish": "yarn workspace tekton-pipeline-renderer run npm:publish"
   },
