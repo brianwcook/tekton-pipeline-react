@@ -292,7 +292,6 @@ describe('pipeline-graph-utils', () => {
       // All nodes at the same level should have the same width
       const levelZeroNodes = model?.nodes?.filter(n => n.data.level === 0);
       const levelOneNodes = model?.nodes?.filter(n => n.data.level === 1);
-      const levelTwoNodes = model?.nodes?.filter(n => n.data.level === 2);
 
       // Check that nodes at same level have same width
       if (levelZeroNodes && levelZeroNodes.length > 1) {

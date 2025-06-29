@@ -1,0 +1,47 @@
+# Source files - extension uses built dist/
+src/**
+!src/lib/**
+
+# Build tools and configs
+webpack.config.js
+webpack.webview.config.js
+tsconfig.json
+tsconfig.test.json
+tsconfig.webview.json
+
+# Development dependencies
+node_modules/**
+!node_modules/@patternfly/**
+!node_modules/react/**
+!node_modules/react-dom/**
+!node_modules/js-yaml/**
+
+# Tests
+**/*.test.js
+**/*.test.ts
+**/*.spec.js
+**/*.spec.ts
+test/**
+
+# Development files
+.vscode/**
+.git/**
+.gitignore
+*.vsix
+
+# Parent directory files
+../**
+
+# Logs and caches
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.eslintcache
+
+# Mac files
+.DS_Store
+
+# Misc
+*.log
+*.tmp 

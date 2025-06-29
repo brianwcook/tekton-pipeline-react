@@ -1,10 +1,10 @@
 import * as assert from 'assert';
 import * as vscode from 'vscode';
 import * as path from 'path';
+import { exec } from 'child_process';
 
 // Helper to ensure bundle mode before tests
 async function ensureBundleMode() {
-  const { exec } = require('child_process');
   const rootPath = path.resolve(__dirname, '../../../..');
   
   return new Promise<void>((resolve, reject) => {
