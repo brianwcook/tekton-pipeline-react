@@ -44,7 +44,7 @@ yarn install  # ✅ COMPLETED
 # Development commands
 npm run sample          # Interactive demo app
 npm run propagate       # Sync changes (development mode)
-npm run propagate:bundle # Bundle for release
+npm run propagate # Bundle for release
 npm run test            # Run all tests
 npm run build           # Build both packages
 npm run ci              # Complete CI pipeline
@@ -69,7 +69,7 @@ npm run npm:publish     # Publish renderer to npm
 - Uses `file:../tekton-pipeline-renderer` dependency
 - Fast, live updates during development
 
-### Bundle Mode: `npm run propagate:bundle`  
+### Bundle Mode: `npm run propagate`  
 - Copies renderer source to `tekton-vscode/src/lib/`
 - Creates self-contained extension for distribution
 
@@ -78,7 +78,7 @@ npm run npm:publish     # Publish renderer to npm
 1. **Always run `yarn install` from the root** - never from individual packages
 2. **Never create lock files in workspaces** - they're auto-ignored now
 3. **Use `npm run propagate`** after making renderer changes
-4. **Use `npm run propagate:bundle`** for release builds
+4. **Use `npm run propagate`** for release builds
 
 ## 🎉 Next Steps
 

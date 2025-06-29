@@ -27,7 +27,7 @@ tekton-pipeline-renderer/  ──link──>  tekton-vscode/
 - **Good for**: Active development, debugging, testing
 - **VSCode Extension**: Links to live renderer package
 
-### 📦 Bundle Mode: `npm run propagate:bundle`
+### 📦 Bundle Mode: `npm run propagate`
 ```bash
 tekton-pipeline-renderer/src/  ──copy──>  tekton-vscode/src/lib/
 ```
@@ -38,7 +38,7 @@ tekton-pipeline-renderer/src/  ──copy──>  tekton-vscode/src/lib/
 
 ### 📁 What Bundle Mode Creates
 
-After running `npm run propagate:bundle`:
+After running `npm run propagate`:
 ```
 tekton-vscode/
 ├── src/
@@ -103,7 +103,7 @@ npm run propagate
 npm run test:vscode
 
 # For release (bundles code inside extension)
-npm run propagate:bundle
+npm run propagate
 
 # Build the extension
 npm run build:extension
@@ -134,7 +134,7 @@ npm run release:prepare
 | `npm run test` | Run all tests |
 | `npm run lint` | Lint all code |
 | `npm run propagate` | Sync changes (development mode - file dependency) |
-| `npm run propagate:bundle` | Bundle renderer code inside VSCode extension |
+| `npm run propagate` | Bundle renderer code inside VSCode extension |
 | `npm run release:check` | Comprehensive release validation |
 | `npm run sample` | Run the React sample app |
 
@@ -276,7 +276,7 @@ tekton-vscode/              ──┘   (propagated automatically)
 3. **Verify** with `npm run sample`
 4. **Propagate** with `npm run propagate` (development)
 5. **Integration test** with `npm run test:vscode`
-6. **Bundle** with `npm run propagate:bundle` (for release)
+6. **Bundle** with `npm run propagate` (for release)
 
 ### Debugging the VSCode Extension
 
@@ -289,7 +289,7 @@ tekton-vscode/              ──┘   (propagated automatically)
 
 1. **Update** in `tekton-pipeline-renderer/package.json`
 2. **Run** `npm run propagate` to sync to VSCode extension (development)
-3. **Run** `npm run propagate:bundle` to bundle for release
+3. **Run** `npm run propagate` to bundle for release
 4. **Test** both packages with `npm run test`
 
 ## 🤝 Contributing

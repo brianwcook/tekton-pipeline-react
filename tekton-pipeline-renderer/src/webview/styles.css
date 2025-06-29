@@ -214,4 +214,192 @@ body {
 
 .pf-c-button:hover {
     background: var(--vscode-button-hoverBackground) !important;
+}
+
+/* Enhanced PatternFly Overrides for Better VSCode Theme Integration */
+
+/* More comprehensive topology styling */
+.pf-topology-node-label {
+    fill: var(--vscode-editor-foreground) !important;
+}
+
+.pf-topology-node-icon {
+    fill: var(--vscode-symbolIcon-foreground, var(--vscode-editor-foreground)) !important;
+}
+
+/* Node backgrounds for better contrast */
+.pf-topology-node rect,
+.pf-topology-node circle {
+    fill: var(--vscode-editor-background) !important;
+    stroke: var(--vscode-panel-border) !important;
+    stroke-width: 2 !important;
+}
+
+/* Hover states */
+.pf-topology-node:hover rect,
+.pf-topology-node:hover circle {
+    fill: var(--vscode-list-hoverBackground) !important;
+    stroke: var(--vscode-focusBorder) !important;
+}
+
+/* Selected states */
+.pf-topology-node.pf-m-selected rect,
+.pf-topology-node.pf-m-selected circle {
+    fill: var(--vscode-list-activeSelectionBackground) !important;
+    stroke: var(--vscode-list-activeSelectionForeground) !important;
+}
+
+/* Group/cluster styling */
+.pf-topology-group {
+    fill: var(--vscode-panel-background) !important;
+    stroke: var(--vscode-panel-border) !important;
+}
+
+/* Tooltip styling */
+.pf-c-tooltip {
+    background: var(--vscode-editorHoverWidget-background) !important;
+    color: var(--vscode-editorHoverWidget-foreground) !important;
+    border: 1px solid var(--vscode-editorHoverWidget-border) !important;
+}
+
+/* Control bar enhancements */
+.pf-c-topology-control-bar__button {
+    background: var(--vscode-button-secondaryBackground) !important;
+    color: var(--vscode-button-secondaryForeground) !important;
+}
+
+.pf-c-topology-control-bar__button:hover {
+    background: var(--vscode-button-secondaryHoverBackground) !important;
+}
+
+/* Additional PatternFly component overrides */
+.pf-c-topology-view .pf-c-topology-node__label {
+    fill: var(--vscode-editor-foreground) !important;
+    font-family: var(--vscode-font-family) !important;
+}
+
+/* Task node specific styling */
+.pf-c-topology-node.pf-m-task rect {
+    fill: var(--vscode-editor-background) !important;
+    stroke: var(--vscode-textLink-foreground) !important;
+}
+
+.pf-c-topology-node.pf-m-task.pf-m-running rect {
+    fill: var(--vscode-progressBar-background) !important;
+    stroke: var(--vscode-charts-blue) !important;
+}
+
+.pf-c-topology-node.pf-m-task.pf-m-succeeded rect {
+    fill: var(--vscode-testing-iconPassed) !important;
+    stroke: var(--vscode-charts-green) !important;
+}
+
+.pf-c-topology-node.pf-m-task.pf-m-failed rect {
+    fill: var(--vscode-testing-iconFailed) !important;
+    stroke: var(--vscode-charts-red) !important;
+}
+
+/* Edge connections styling */
+.pf-c-topology-edge path {
+    stroke: var(--vscode-panel-border) !important;
+    stroke-width: 2 !important;
+}
+
+.pf-c-topology-edge.pf-m-success path {
+    stroke: var(--vscode-charts-green) !important;
+}
+
+.pf-c-topology-edge.pf-m-error path {
+    stroke: var(--vscode-charts-red) !important;
+}
+
+/* Scrollbar styling for consistency */
+::-webkit-scrollbar {
+    width: 12px;
+    background: var(--vscode-scrollbar-shadow);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--vscode-scrollbarSlider-background);
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--vscode-scrollbarSlider-hoverBackground);
+}
+
+::-webkit-scrollbar-track {
+    background: var(--vscode-scrollbar-shadow);
+}
+
+/* Basic PatternFly Overrides for VS Code Theme */
+.pf-c-topology-view {
+    background: var(--vscode-editor-background) !important;
+}
+
+.pf-c-topology-view__surface {
+    background: var(--vscode-editor-background) !important;
+}
+
+/* Force background on SVG and canvas elements */
+.pf-c-topology-view svg,
+.pf-c-topology-view canvas,
+div.pf-c-topology-view svg,
+div.pf-c-topology-view canvas {
+    background: var(--vscode-editor-background) !important;
+    background-color: var(--vscode-editor-background) !important;
+}
+
+/* Force background on the main topology surface */
+.pf-c-topology-view__surface,
+div.pf-c-topology-view__surface,
+.pf-c-topology-view .pf-c-topology-view__surface,
+div.pf-c-topology-view div.pf-c-topology-view__surface {
+    background: var(--vscode-editor-background) !important;
+    background-color: var(--vscode-editor-background) !important;
+    fill: var(--vscode-editor-background) !important;
+}
+
+/* Override any PatternFly white/light backgrounds */
+.pf-c-topology-view [fill="#ffffff"],
+.pf-c-topology-view [fill="white"],
+.pf-c-topology-view [fill="#fff"],
+.pf-c-topology-view [fill="rgb(255, 255, 255)"] {
+    fill: var(--vscode-editor-background) !important;
+}
+
+/* Override React component styling */
+div[data-testid="topology-container"],
+div[data-topology-status="rendered"] {
+    background: var(--vscode-editor-background) !important;
+    background-color: var(--vscode-editor-background) !important;
+}
+
+/* Force all child elements to inherit proper background */
+.pf-c-topology-view *,
+div.pf-c-topology-view * {
+    background-color: transparent !important;
+}
+
+/* Ensure topology surface gets dark background */
+.pf-c-topology-view__surface,
+.pf-c-topology-view .pf-c-topology-view__surface {
+    background: var(--vscode-editor-background) !important;
+    background-color: var(--vscode-editor-background) !important;
+}
+
+/* Override inline styles if present */
+div[style*="background"] {
+    background: var(--vscode-editor-background) !important;
+}
+
+/* Target any remaining white backgrounds */
+*[style*="background-color: white"],
+*[style*="background-color: #ffffff"],
+*[style*="background-color: #fff"],
+*[style*="background: white"],
+*[style*="background: #ffffff"],
+*[style*="background: #fff"] {
+    background: var(--vscode-editor-background) !important;
+    background-color: var(--vscode-editor-background) !important;
 } 
